@@ -390,10 +390,315 @@
 
 ---
 
-## 7. 참조
+## 7. Frontend API Client
+
+### 7.1 Base Configuration
+
+```typescript
+// lib/api/config.ts
+const API_BASE_URL = 'http://localhost:8080/api/v1';
+
+interface ApiConfig {
+  baseUrl: string;
+  timeout: number;
+}
+
+const config: ApiConfig = {
+  baseUrl: API_BASE_URL,
+  timeout: 30000  // 30초 (AI 응답 대기)
+};
+```
+
+### 7.2 API Client Export
+
+```typescript
+// lib/api/index.ts
+export const api = {
+  session: {
+    create: createSession,     // POST /sessions
+    get: getSession,           // GET /sessions/{id}
+    delete: deleteSession      // DELETE /sessions/{id}
+  },
+  conversation: {
+    sendMessage,               // POST /sessions/{id}/messages
+    getPortfolio,              // GET /sessions/{id}/portfolio
+    getCurrentPrompt           // GET /sessions/{id}/prompt
+  }
+};
+
+export type { SessionResponse, MessageResponse, Portfolio, ApiError };
+export { ErrorCodes };
+```
+
+### 7.3 Session API
+
+#### Create Session
+
+```typescript
+async function createSession(): Promise<SessionResponse> {
+  const response = await fetch(`${API_BASE_URL}/sessions`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' }
+  });
+
+  if (!response.ok) {
+    throw await parseError(response);
+  }
+
+  return response.json();
+}
+```
+
+#### Get Session
+
+```typescript
+async function getSession(sessionId: string): Promise<SessionResponse> {
+  const response = await fetch(`${API_BASE_URL}/sessions/${sessionId}`);
+
+  if (!response.ok) {
+    throw await parseError(response);
+  }
+
+  return response.json();
+}
+```
+
+#### Delete Session
+
+```typescript
+async function deleteSession(sessionId: string): Promise<void> {
+  const response = await fetch(`${API_BASE_URL}/sessions/${sessionId}`, {
+    method: 'DELETE'
+  });
+
+  if (!response.ok) {
+    throw await parseError(response);
+  }
+}
+```
+
+### 7.4 Conversation API
+
+#### Send Message
+
+```typescript
+async function sendMessage(
+  sessionId: string,
+  message: string
+): Promise<MessageResponse> {
+  const response = await fetch(
+    `${API_BASE_URL}/sessions/${sessionId}/messages`,
+    {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message })
+    }
+  );
+
+  if (!response.ok) {
+    throw await parseError(response);
+  }
+
+  return response.json();
+}
+```
+
+#### Get Portfolio
+
+```typescript
+async function getPortfolio(sessionId: string): Promise<Portfolio> {
+  const response = await fetch(
+    `${API_BASE_URL}/sessions/${sessionId}/portfolio`
+  );
+
+  if (!response.ok) {
+    throw await parseError(response);
+  }
+
+  return response.json();
+}
+```
+
+#### Get Current Prompt
+
+```typescript
+async function getCurrentPrompt(sessionId: string): Promise<MessageResponse> {
+  const response = await fetch(
+    `${API_BASE_URL}/sessions/${sessionId}/prompt`
+  );
+
+  if (!response.ok) {
+    throw await parseError(response);
+  }
+
+  return response.json();
+}
+```
+
+### 7.5 Usage Examples
+
+#### Create and Start Session
+
+```typescript
+// +page.svelte (Main)
+import { api } from '$lib/api';
+import { goto } from '$app/navigation';
+
+async function handleCreateSession() {
+  try {
+    const session = await api.session.create();
+    goto(`/chat/${session.id}`);
+  } catch (error) {
+    console.error('Failed to create session:', error);
+  }
+}
+```
+
+#### Send Message and Update UI
+
+```typescript
+// chat/[sessionId]/+page.svelte
+import { api } from '$lib/api';
+import { chatStore, sessionStore, portfolioStore } from '$lib/stores';
+
+async function handleSendMessage(message: string) {
+  chatStore.update(s => ({ ...s, isLoading: true }));
+
+  try {
+    const response = await api.conversation.sendMessage(sessionId, message);
+
+    // Add user message
+    chatStore.update(s => ({
+      ...s,
+      messages: [...s.messages, { role: 'user', content: message }]
+    }));
+
+    // Add AI response
+    chatStore.update(s => ({
+      ...s,
+      messages: [...s.messages, { role: 'assistant', content: response.message }],
+      isLoading: false
+    }));
+
+    // Update session state
+    sessionStore.update(s => s ? { ...s, currentStep: response.currentStep } : null);
+
+    // Refresh portfolio for preview
+    const portfolio = await api.conversation.getPortfolio(sessionId);
+    portfolioStore.set(portfolio);
+
+  } catch (error) {
+    chatStore.update(s => ({ ...s, isLoading: false, error: error.message }));
+  }
+}
+```
+
+---
+
+## 8. Frontend Data Models
+
+### 8.1 Session Store
+
+```typescript
+interface Session {
+  id: string;                    // UUID
+  currentStep: ConversationStep;
+  status: SessionStatus;
+  createdAt: string;             // ISO 8601
+  lastActivityAt: string;        // ISO 8601
+  progressPercentage: number;    // 0-100
+}
+
+type SessionStatus = 'ACTIVE' | 'COMPLETED' | 'TERMINATED' | 'EXPIRED';
+```
+
+### 8.2 Chat Store
+
+```typescript
+interface ChatMessage {
+  id: string;                    // client-generated UUID
+  role: 'user' | 'assistant';
+  content: string;
+  timestamp: Date;
+}
+
+interface ChatState {
+  messages: ChatMessage[];
+  isLoading: boolean;
+  error: string | null;
+}
+```
+
+### 8.3 Message Response
+
+```typescript
+interface MessageResponse {
+  message: string;
+  currentStep: ConversationStep;
+  completed: boolean;
+  expectedInputType?: 'text' | 'image' | 'selection';
+}
+```
+
+### 8.4 Step Display Mapping
+
+```typescript
+const STEP_LABELS: Record<ConversationStep, string> = {
+  STEP_0_GATE: '희망 직무 확인',
+  STEP_1_PERSONAL_INFO: '기본 개인정보',
+  STEP_2_WORK_EXPERIENCE: '이력',
+  STEP_3_EDUCATION: '학력',
+  STEP_4_REPRESENTATIVE_PROJECTS: '대표 프로젝트',
+  STEP_5_PROJECTS: '일반 프로젝트',
+  STEP_6_AWARDS: '수상 경력',
+  STEP_7_MAJOR_ACTIVITIES: '주요 대외활동',
+  STEP_8_OTHER_ACTIVITIES: '그 외 대외활동',
+  STEP_9_CERTIFICATIONS: '자격증',
+  STEP_10_TECHNICAL_SKILLS: '기술 역량',
+  STEP_11_ABOUT: '자기소개'
+};
+```
+
+### 8.5 Svelte Store Definitions
+
+```typescript
+// stores/session.ts
+import { writable } from 'svelte/store';
+
+export const sessionStore = writable<Session | null>(null);
+
+// stores/chat.ts
+export const chatStore = writable<ChatState>({
+  messages: [],
+  isLoading: false,
+  error: null
+});
+
+// stores/portfolio.ts
+export const portfolioStore = writable<Portfolio | null>(null);
+```
+
+---
+
+## 9. API Summary Table
+
+| API | Method | Endpoint | Frontend Client | Purpose |
+|:----|:-------|:---------|:----------------|:--------|
+| API-001 | POST | /sessions | `api.session.create()` | 새 세션 생성 |
+| API-002 | GET | /sessions/{id} | `api.session.get(id)` | 세션 상태 조회 |
+| API-003 | DELETE | /sessions/{id} | `api.session.delete(id)` | 세션 삭제 |
+| API-004 | POST | /sessions/{id}/messages | `api.conversation.sendMessage(id, msg)` | 메시지 전송 |
+| API-005 | GET | /sessions/{id}/portfolio | `api.conversation.getPortfolio(id)` | 포트폴리오 조회 |
+| API-006 | GET | /sessions/{id}/prompt | `api.conversation.getCurrentPrompt(id)` | 현재 프롬프트 조회 |
+
+---
+
+## 10. 참조
 
 - [대화 흐름 명세서](./project/conversation-flow-spec.md)
 - [포트폴리오 데이터 스키마](./project/portfolio-data-schema.md)
 - [에러 명세서](./error_spec.md)
+- [Frontend API Client Contract](../specs/002-frontend-web/contracts/api-client.md)
+- [Frontend Data Model](../specs/002-frontend-web/data-model.md)
 
 ---
