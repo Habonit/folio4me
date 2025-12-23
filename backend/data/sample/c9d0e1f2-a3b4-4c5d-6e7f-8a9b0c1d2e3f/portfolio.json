@@ -1,0 +1,47 @@
+{
+  "meta": {
+    "targetRole": "프론트엔드 개발자",
+    "createdAt": "2025-12-19T18:00:00Z",
+    "status": "complete"
+  },
+  "personalInfo": {
+    "name": "강민수",
+    "github": null,
+    "email": "minsu.kang@example.com",
+    "profileImage": null,
+    "confirmed": true
+  },
+  "workExperience": [],
+  "education": {
+    "display": false,
+    "items": []
+  },
+  "representativeProjects": [],
+  "projects": [
+    {
+      "name": "개인 블로그",
+      "period": "20240601~20240831",
+      "responsibility": ["프론트엔드 개발"],
+      "techStack": ["React", "Next.js"],
+      "links": null,
+      "confirmed": true
+    }
+  ],
+  "awards": [],
+  "activities": {
+    "major": [],
+    "minor": []
+  },
+  "certifications": [],
+  "technicalSkills": {
+    "strong": ["JavaScript", "React"],
+    "knowledgeable": [],
+    "confirmed": true
+  },
+  "about": {
+    "sentences": [
+      "프론트엔드 개발을 배우고 있는 취업 준비생입니다."
+    ],
+    "confirmed": true
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "meta": {
+    "targetRole": "데이터 엔지니어",
+    "createdAt": "2025-12-19T12:00:00Z",
+    "status": "complete"
+  },
+  "personalInfo": {
+    "name": "박준혁",
+    "github": "https://github.com/junhyuk-park",
+    "email": "junhyuk.park@example.com",
+    "profileImage": null,
+    "confirmed": true
+  },
+  "workExperience": [],
+  "education": {
+    "display": false,
+    "items": [
+      {
+        "school": "고려대학교",
+        "degree": "석사",
+        "major": "데이터사이언스학과",
+        "period": "20200301~20220228",
+        "confirmed": true
+      }
+    ]
+  },
+  "representativeProjects": [
+    {
+      "name": "데이터 파이프라인 구축",
+      "period": "20230101~20230630",
+      "responsibility": ["ETL 파이프라인 설계"],
+      "techStack": ["Apache Airflow", "Python", "BigQuery"],
+      "links": null,
+      "confirmed": true
+    }
+  ],
+  "projects": [],
+  "awards": [],
+  "activities": {
+    "major": [],
+    "minor": []
+  },
+  "certifications": [],
+  "technicalSkills": {
+    "strong": ["Python", "SQL", "Apache Airflow"],
+    "knowledgeable": ["Spark", "Kafka"],
+    "confirmed": true
+  },
+  "about": {
+    "sentences": [
+      "데이터 파이프라인 설계와 최적화에 집중하는 엔지니어입니다.",
+      "대용량 데이터 처리 경험이 있습니다.",
+      "효율적인 데이터 흐름 구축을 목표로 합니다."
+    ],
+    "confirmed": true
+  }
+}

@@ -1,0 +1,92 @@
+{
+  "meta": {
+    "targetRole": "프론트엔드 개발자",
+    "createdAt": "2025-12-19T11:00:00Z",
+    "status": "complete"
+  },
+  "personalInfo": {
+    "name": "이지현",
+    "github": "https://github.com/jihyun-lee",
+    "email": "jihyun.lee@example.com",
+    "profileImage": "https://example.com/images/jihyun-profile.jpg",
+    "confirmed": true
+  },
+  "workExperience": [
+    {
+      "company": "웹에이전시",
+      "period": "20210601~present",
+      "responsibility": "프론트엔드 개발 및 UI/UX 개선",
+      "position": "프론트엔드 개발자",
+      "links": null,
+      "confirmed": true
+    }
+  ],
+  "education": {
+    "display": true,
+    "items": [
+      {
+        "school": "한양대학교",
+        "degree": "학사",
+        "major": "소프트웨어학과",
+        "period": "20150301~20190228",
+        "confirmed": true
+      }
+    ]
+  },
+  "representativeProjects": [
+    {
+      "name": "기업 대시보드 리뉴얼",
+      "period": "20230301~20230831",
+      "responsibility": ["UI 컴포넌트 설계", "차트 라이브러리 연동"],
+      "techStack": ["React", "TypeScript", "D3.js", "Styled-components"],
+      "links": ["https://github.com/jihyun-lee/dashboard-renewal"],
+      "confirmed": true
+    }
+  ],
+  "projects": [
+    {
+      "name": "개인 블로그",
+      "period": "20220101~20220331",
+      "responsibility": ["Next.js 기반 블로그 개발"],
+      "techStack": ["Next.js", "MDX", "Vercel"],
+      "links": ["https://jihyun-blog.vercel.app"],
+      "confirmed": true
+    }
+  ],
+  "awards": [],
+  "activities": {
+    "major": [
+      {
+        "title": "프론트엔드 스터디 운영",
+        "period": "20220601~20221231",
+        "content": "주 1회 React/TypeScript 스터디 리드",
+        "links": null,
+        "includeInResume": true,
+        "confirmed": true
+      }
+    ],
+    "minor": []
+  },
+  "certifications": [
+    {
+      "title": "SQLD",
+      "period": "20200901~20200901",
+      "organization": "한국데이터산업진흥원",
+      "links": null,
+      "confirmed": true
+    }
+  ],
+  "technicalSkills": {
+    "strong": ["React", "TypeScript", "Next.js", "CSS-in-JS"],
+    "knowledgeable": ["Vue.js", "Node.js", "GraphQL"],
+    "confirmed": true
+  },
+  "about": {
+    "sentences": [
+      "사용자 경험을 최우선으로 생각하는 프론트엔드 개발자입니다.",
+      "컴포넌트 기반 설계와 재사용성 높은 코드 작성을 지향합니다.",
+      "새로운 기술 트렌드를 빠르게 습득하고 적용하는 것을 좋아합니다."
+    ],
+    "confirmed": true
+  }
+}

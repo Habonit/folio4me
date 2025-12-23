@@ -1,0 +1,19 @@
+{
+  "meta": {
+    "createdAt": "2025-12-19T17:30:00Z",
+    "updatedAt": "2025-12-19T17:35:00Z",
+    "status": "complete"
+  },
+  "stylePreference": {
+    "userInput": "화려하고 눈에 띄는 스타일",
+    "history": [],
+    "confirmed": true
+  },
+  "selectedTemplate": {
+    "templateId": 3,
+    "title": "kundol_portfolio",
+    "description": "밝은 색깔의 비교적 화려한 스타일",
+    "link": "https://www.inflearn.com/course/%ED%8F%AC%ED%8A%B8%ED%8F%B4%EB%A6%AC%EC%98%A4-%EC%96%B4%EB%82%98%EB%8D%94%EB%A0%88%EB%B2%A8/dashboard",
+    "confirmed": true
+  }
+}

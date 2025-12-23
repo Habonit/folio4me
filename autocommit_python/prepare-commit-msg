@@ -1,0 +1,29 @@
+#!/bin/bash
+
+COMMIT_MSG_FILE=$1
+PROJECT_ROOT=$(git rev-parse --show-toplevel)
+SCRIPT_PATH="$PROJECT_ROOT/autocommit_python/ai_commit_message.py"
+
+DIFF=$(git diff --cached | head -c 3000)
+
+# staged 변경사항이 없으면 종료
+if [ -z "$DIFF" ]; then
+    echo "staged 변경사항이 없습니다."
+    exit 0
+fi
+
+PYTHON=$(which python3 || which python)
+
+if [ -z "$PYTHON" ]; then
+    echo "❌ Python을 찾을 수 없습니다."
+    exit 1
+fi
+
+RESULT=$("$PYTHON" "$SCRIPT_PATH" "$DIFF" 2>&1)
+
+if [ $? -ne 0 ]; then
+    echo "❌ AI 커밋 메시지 생성 실패: $RESULT"
+    exit 1
+fi
+
+echo "$RESULT" > "$COMMIT_MSG_FILE"

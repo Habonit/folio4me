@@ -1,0 +1,179 @@
+{
+  "meta": {
+    "targetRole": "데이터 엔지니어",
+    "createdAt": "2025-12-19T16:00:00Z",
+    "status": "complete"
+  },
+  "personalInfo": {
+    "name": "박지훈",
+    "github": "https://github.com/jihoon-park",
+    "email": "jihoon.park@example.com",
+    "profileImage": "https://example.com/images/jihoon-profile.jpg",
+    "confirmed": true
+  },
+  "workExperience": [
+    {
+      "company": "빅데이터랩",
+      "period": "20200301~present",
+      "responsibility": "데이터 파이프라인 설계 및 운영",
+      "position": "시니어 데이터 엔지니어",
+      "links": ["https://bigdatalab.co.kr", "https://tech.bigdatalab.co.kr/team"],
+      "confirmed": true
+    },
+    {
+      "company": "데이터웍스",
+      "period": "20170601~20200228",
+      "responsibility": "ETL 파이프라인 개발",
+      "position": "데이터 엔지니어",
+      "links": ["https://dataworks.io"],
+      "confirmed": true
+    },
+    {
+      "company": "스타트업허브",
+      "period": "20150901~20170531",
+      "responsibility": "백엔드 개발 및 데이터 분석",
+      "position": "주니어 개발자",
+      "links": ["https://startuphub.kr"],
+      "confirmed": true
+    }
+  ],
+  "education": {
+    "display": true,
+    "items": [
+      {
+        "school": "서울대학교",
+        "degree": "학사",
+        "major": "컴퓨터공학부",
+        "period": "20110301~20150228",
+        "confirmed": true
+      },
+      {
+        "school": "서울대학교",
+        "degree": "석사",
+        "major": "데이터사이언스",
+        "period": "20150301~20170228",
+        "confirmed": true
+      }
+    ]
+  },
+  "representativeProjects": [
+    {
+      "name": "실시간 로그 분석 시스템",
+      "period": "20210601~20221231",
+      "responsibility": ["아키텍처 설계", "Kafka 클러스터 구축", "Spark Streaming 개발", "모니터링 대시보드"],
+      "techStack": ["Apache Kafka", "Apache Spark", "Python", "Elasticsearch", "Grafana"],
+      "links": ["https://github.com/jihoon-park/log-analytics", "https://tech.bigdatalab.co.kr/log-system"],
+      "confirmed": true
+    },
+    {
+      "name": "데이터 레이크 구축 프로젝트",
+      "period": "20200601~20210531",
+      "responsibility": ["AWS 인프라 설계", "데이터 수집 파이프라인", "데이터 카탈로그 구축"],
+      "techStack": ["AWS S3", "AWS Glue", "Apache Airflow", "Delta Lake", "Terraform"],
+      "links": ["https://aws.amazon.com/solutions/case-studies/bigdatalab"],
+      "confirmed": true
+    }
+  ],
+  "projects": [
+    {
+      "name": "머신러닝 피처 스토어",
+      "period": "20230101~20230630",
+      "responsibility": ["피처 스토어 설계", "API 개발"],
+      "techStack": ["Feast", "Python", "PostgreSQL", "Redis"],
+      "links": ["https://github.com/jihoon-park/feature-store"],
+      "confirmed": true
+    },
+    {
+      "name": "데이터 품질 모니터링 도구",
+      "period": "20220601~20221231",
+      "responsibility": ["품질 규칙 엔진 개발"],
+      "techStack": ["Great Expectations", "Python", "Apache Airflow"],
+      "links": ["https://github.com/jihoon-park/data-quality"],
+      "confirmed": true
+    }
+  ],
+  "awards": [
+    {
+      "title": "AWS 데이터 챌린지 우승",
+      "period": "20220915~20220915",
+      "content": "실시간 데이터 처리 솔루션으로 1위 수상",
+      "organization": "Amazon Web Services",
+      "links": ["https://aws.amazon.com/challenges/2022/winners"],
+      "confirmed": true
+    },
+    {
+      "title": "사내 기술 혁신상",
+      "period": "20211215~20211215",
+      "content": "데이터 레이크 구축으로 비용 70% 절감 기여",
+      "organization": "빅데이터랩",
+      "links": null,
+      "confirmed": true
+    }
+  ],
+  "activities": {
+    "major": [
+      {
+        "title": "데이터 엔지니어링 밋업 발표",
+        "period": "20230601~20230601",
+        "content": "대규모 데이터 파이프라인 운영 경험 공유",
+        "links": ["https://meetup.com/data-engineering-kr/events/456"],
+        "includeInResume": true,
+        "confirmed": true
+      },
+      {
+        "title": "오픈소스 컨트리뷰터",
+        "period": "20210101~present",
+        "content": "Apache Airflow, Delta Lake 컨트리뷰션",
+        "links": ["https://github.com/apache/airflow/pulls?q=author:jihoon-park"],
+        "includeInResume": true,
+        "confirmed": true
+      }
+    ],
+    "minor": [
+      {
+        "title": "기술 블로그 운영",
+        "period": "20190101~present",
+        "content": "데이터 엔지니어링 관련 글 작성",
+        "links": ["https://jihoon-tech.blog"],
+        "includeInResume": false,
+        "confirmed": true
+      }
+    ]
+  },
+  "certifications": [
+    {
+      "title": "AWS Solutions Architect Professional",
+      "period": "20210301~20240301",
+      "organization": "Amazon Web Services",
+      "links": ["https://aws.amazon.com/verification"],
+      "confirmed": true
+    },
+    {
+      "title": "Databricks Certified Data Engineer",
+      "period": "20220601~20250601",
+      "organization": "Databricks",
+      "links": ["https://credentials.databricks.com"],
+      "confirmed": true
+    },
+    {
+      "title": "Google Cloud Professional Data Engineer",
+      "period": "20200901~20230901",
+      "organization": "Google Cloud",
+      "links": ["https://cloud.google.com/certification"],
+      "confirmed": true
+    }
+  ],
+  "technicalSkills": {
+    "strong": ["Python", "Apache Spark", "Apache Kafka", "Apache Airflow", "AWS", "SQL"],
+    "knowledgeable": ["Scala", "Terraform", "Kubernetes", "Delta Lake", "dbt", "GCP"],
+    "confirmed": true
+  },
+  "about": {
+    "sentences": [
+      "8년차 데이터 엔지니어로 대규모 데이터 파이프라인 설계 및 운영 경험이 풍부합니다.",
+      "실시간 스트리밍부터 배치 처리까지 다양한 데이터 처리 시스템을 구축해왔습니다.",
+      "오픈소스 커뮤니티 활동을 통해 기술 생태계에 기여하고 있습니다."
+    ],
+    "confirmed": true
+  }
+}

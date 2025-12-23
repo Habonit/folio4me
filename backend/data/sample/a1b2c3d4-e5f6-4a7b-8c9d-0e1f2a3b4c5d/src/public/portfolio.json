@@ -1,0 +1,133 @@
+{
+  "meta": {
+    "targetRole": "백엔드 개발자",
+    "createdAt": "2025-12-19T10:00:00Z",
+    "status": "complete"
+  },
+  "personalInfo": {
+    "name": "김민수",
+    "github": "https://github.com/minsu-kim",
+    "email": "minsu.kim@example.com",
+    "profileImage": "https://example.com/images/minsu-profile.jpg",
+    "confirmed": true
+  },
+  "workExperience": [
+    {
+      "company": "테크스타트업",
+      "period": "20220301~present",
+      "responsibility": "백엔드 API 개발 및 데이터베이스 설계",
+      "position": "시니어 개발자",
+      "links": ["https://techstartup.com"],
+      "confirmed": true
+    },
+    {
+      "company": "소프트웨어랩",
+      "period": "20200101~20220228",
+      "responsibility": "웹 서비스 개발 및 유지보수",
+      "position": "주니어 개발자",
+      "links": ["https://softwarelab.co.kr"],
+      "confirmed": true
+    }
+  ],
+  "education": {
+    "display": true,
+    "items": [
+      {
+        "school": "서울대학교",
+        "degree": "학사",
+        "major": "컴퓨터공학과",
+        "period": "20140301~20180228",
+        "confirmed": true
+      }
+    ]
+  },
+  "representativeProjects": [
+    {
+      "name": "실시간 채팅 플랫폼",
+      "period": "20230601~20231231",
+      "responsibility": ["백엔드 아키텍처 설계", "WebSocket 서버 구현", "메시지 큐 시스템 구축"],
+      "techStack": ["Node.js", "Socket.io", "Redis", "PostgreSQL"],
+      "links": ["https://github.com/minsu-kim/realtime-chat", "https://chat-demo.example.com"],
+      "confirmed": true
+    },
+    {
+      "name": "이커머스 결제 시스템",
+      "period": "20220901~20230531",
+      "responsibility": ["결제 API 개발", "PG사 연동", "보안 모듈 구현"],
+      "techStack": ["Python", "FastAPI", "PostgreSQL", "Docker"],
+      "links": ["https://github.com/minsu-kim/payment-system"],
+      "confirmed": true
+    }
+  ],
+  "projects": [
+    {
+      "name": "사내 업무 자동화 툴",
+      "period": "20210601~20210831",
+      "responsibility": ["슬랙 봇 개발", "자동 리포트 생성"],
+      "techStack": ["Python", "Slack API", "AWS Lambda"],
+      "links": null,
+      "confirmed": true
+    }
+  ],
+  "awards": [
+    {
+      "title": "해커톤 대상",
+      "period": "20231115~20231115",
+      "content": "실시간 협업 도구 개발로 1등 수상",
+      "organization": "한국개발자협회",
+      "links": ["https://hackathon2023.kr/winners"],
+      "confirmed": true
+    }
+  ],
+  "activities": {
+    "major": [
+      {
+        "title": "오픈소스 컨트리뷰터",
+        "period": "20220101~present",
+        "content": "FastAPI 프레임워크 문서화 및 버그 수정 기여",
+        "links": ["https://github.com/tiangolo/fastapi/pulls?q=author:minsu-kim"],
+        "includeInResume": true,
+        "confirmed": true
+      }
+    ],
+    "minor": [
+      {
+        "title": "개발 블로그 운영",
+        "period": "20210601~present",
+        "content": "기술 블로그 운영 및 월 5천 방문자 달성",
+        "links": ["https://minsu-dev.tistory.com"],
+        "includeInResume": false,
+        "confirmed": true
+      }
+    ]
+  },
+  "certifications": [
+    {
+      "title": "정보처리기사",
+      "period": "20190601~20190601",
+      "organization": "한국산업인력공단",
+      "links": null,
+      "confirmed": true
+    },
+    {
+      "title": "AWS Solutions Architect Associate",
+      "period": "20220315~20250315",
+      "organization": "Amazon Web Services",
+      "links": ["https://aws.amazon.com/verification"],
+      "confirmed": true
+    }
+  ],
+  "technicalSkills": {
+    "strong": ["Python", "Node.js", "PostgreSQL", "Docker", "FastAPI", "Redis"],
+    "knowledgeable": ["Kubernetes", "AWS", "React", "TypeScript", "MongoDB"],
+    "confirmed": true
+  },
+  "about": {
+    "sentences": [
+      "3년차 백엔드 개발자로 확장 가능한 시스템 설계에 관심이 많습니다.",
+      "실시간 처리와 대용량 트래픽 환경에서의 개발 경험을 보유하고 있습니다.",
+      "팀과의 협업을 중시하며, 코드 리뷰와 기술 공유를 즐깁니다."
+    ],
+    "confirmed": true
+  }
+}
