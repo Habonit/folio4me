@@ -11,6 +11,7 @@
 | INVALID_PERIOD | 400 | 유효하지 않은 기간 형식 | ✅ |
 | STORAGE_ERROR | 500 | 저장소 오류 | ✅ |
 | INTERNAL_SERVER_ERROR | 500 | 서버 내부 오류 | ✅ |
+| UNKNOWN_ERROR | - | 응답 파싱 실패 (Frontend) | ✅ |
 
 ---
 
@@ -231,9 +232,167 @@ RuntimeException
 
 ---
 
+## Frontend 에러 처리
+
+### 에러 파싱 함수
+
+```typescript
+// lib/api/error.ts
+interface ApiError {
+  status: number;
+  error: string;
+  message: string;
+  path: string;
+  timestamp: string;
+}
+
+async function parseError(response: Response): Promise<ApiError> {
+  try {
+    return await response.json();
+  } catch {
+    return {
+      status: response.status,
+      error: 'UNKNOWN_ERROR',
+      message: response.statusText,
+      path: '',
+      timestamp: new Date().toISOString()
+    };
+  }
+}
+```
+
+### 에러 코드 상수
+
+```typescript
+// lib/api/error.ts
+const ErrorCodes = {
+  SESSION_NOT_FOUND: 'SESSION_NOT_FOUND',
+  INVALID_INPUT: 'INVALID_INPUT',
+  INVALID_PERIOD: 'INVALID_PERIOD',
+  STORAGE_ERROR: 'STORAGE_ERROR',
+  INTERNAL_SERVER_ERROR: 'INTERNAL_SERVER_ERROR',
+  UNKNOWN_ERROR: 'UNKNOWN_ERROR'
+} as const;
+
+type ErrorCode = typeof ErrorCodes[keyof typeof ErrorCodes];
+```
+
+### 에러 핸들링 예시
+
+```typescript
+// chat/[sessionId]/+page.svelte
+import { api, ErrorCodes } from '$lib/api';
+import { chatStore } from '$lib/stores';
+
+async function handleSendMessage(message: string) {
+  chatStore.update(s => ({ ...s, isLoading: true, error: null }));
+
+  try {
+    const response = await api.conversation.sendMessage(sessionId, message);
+    // ... 성공 처리
+  } catch (error) {
+    const apiError = error as ApiError;
+
+    switch (apiError.error) {
+      case ErrorCodes.SESSION_NOT_FOUND:
+        // 세션 만료 - 새 세션 생성 유도
+        chatStore.update(s => ({
+          ...s,
+          isLoading: false,
+          error: '세션이 만료되었습니다. 새로 시작해주세요.'
+        }));
+        break;
+
+      case ErrorCodes.INVALID_INPUT:
+        // 입력 오류 - 인라인 에러 표시
+        chatStore.update(s => ({
+          ...s,
+          isLoading: false,
+          error: apiError.message
+        }));
+        break;
+
+      case ErrorCodes.INVALID_PERIOD:
+        // 기간 형식 오류 - 형식 안내
+        chatStore.update(s => ({
+          ...s,
+          isLoading: false,
+          error: '기간 형식을 확인해주세요. (예: 20230301~20231231)'
+        }));
+        break;
+
+      default:
+        // 기타 오류
+        chatStore.update(s => ({
+          ...s,
+          isLoading: false,
+          error: '오류가 발생했습니다. 다시 시도해주세요.'
+        }));
+    }
+  }
+}
+```
+
+### 네트워크 에러 처리
+
+```typescript
+// lib/api/error.ts
+async function fetchWithRetry<T>(
+  fetcher: () => Promise<T>,
+  maxRetries: number = 3
+): Promise<T> {
+  let lastError: Error | null = null;
+
+  for (let i = 0; i < maxRetries; i++) {
+    try {
+      return await fetcher();
+    } catch (error) {
+      lastError = error as Error;
+
+      // 네트워크 에러인 경우에만 재시도
+      if (error instanceof TypeError && error.message === 'Failed to fetch') {
+        await new Promise(resolve => setTimeout(resolve, 1000 * (i + 1)));
+        continue;
+      }
+
+      throw error;
+    }
+  }
+
+  throw lastError;
+}
+```
+
+### Edge Case 에러 처리
+
+| 상황 | 에러 코드 | Frontend 처리 |
+|:-----|:---------|:-------------|
+| 네트워크 끊김 | `NETWORK_ERROR` | 재시도 옵션 제공 |
+| 세션 만료 | `SESSION_NOT_FOUND` | 재로그인 안내 메시지 |
+| 잘못된 입력 | `INVALID_INPUT` | 인라인 에러 메시지 |
+| 기간 형식 오류 | `INVALID_PERIOD` | 형식 안내 및 재입력 유도 |
+| 이미지 업로드 실패 | `STORAGE_ERROR` | 에러 메시지 및 재시도 버튼 |
+| 서버 오류 | `INTERNAL_SERVER_ERROR` | 일반 에러 메시지 |
+
+---
+
+## Frontend 에러 요약
+
+| 에러 코드 | HTTP | 발생 조건 | UI 처리 |
+|:----------|:-----|:---------|:--------|
+| SESSION_NOT_FOUND | 404 | 세션 조회/삭제/메시지 전송 | 새 세션 생성 유도 |
+| INVALID_INPUT | 400 | 빈 메시지 전송 | 인라인 에러 표시 |
+| INVALID_PERIOD | 400 | 기간 형식 오류 | 형식 안내 표시 |
+| STORAGE_ERROR | 500 | 파일 저장 실패 | 재시도 버튼 표시 |
+| INTERNAL_SERVER_ERROR | 500 | 서버 내부 오류 | 일반 에러 표시 |
+| UNKNOWN_ERROR | - | 응답 파싱 실패 | 일반 에러 표시 |
+
+---
+
 ## 참조
 
 - [API 명세서](./api_spec.md)
 - [GlobalExceptionHandler.java](../backend/src/main/java/com/folio4me/exception/GlobalExceptionHandler.java)
+- [Frontend API Client Contract](../specs/002-frontend-web/contracts/api-client.md)
 
 ---
