@@ -1,0 +1,34 @@
+spring:
+  application:
+    name: folio4me-backend
+
+server:
+  port: ${SERVER_PORT:8080}
+
+# 파일 업로드 설정
+servlet:
+  multipart:
+    max-file-size: 5MB
+    max-request-size: 10MB
+
+# 데이터 저장 경로
+folio4me:
+  data:
+    path: ${DATA_PATH:./data}
+  ai:
+    provider: ${AI_PROVIDER:anthropic}
+    api-key: ${ANTHROPIC_API_KEY:}
+    model: ${AI_MODEL:claude-3-5-sonnet-20241022}
+
+# 로깅 설정
+logging:
+  level:
+    root: ${LOG_LEVEL:INFO}
+    com.folio4me: DEBUG
+
+# Actuator 설정
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
